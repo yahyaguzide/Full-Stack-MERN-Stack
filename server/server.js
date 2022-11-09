@@ -2,7 +2,7 @@ import express from 'express'
 import devBundle from './devBundle'
 import path from 'path'
 import template from './../template'
-import { MongoClient } from 'mongodb/lib/mongo_client'
+//import { MongoClient } from 'mongodb'
 
 const app = express()
 devBundle.compile(app) // only in dev should this be used
@@ -22,8 +22,13 @@ app.listen(port, function onStart(err) {
     console.info('Server started on port %s.', port)
 })
 
-/* const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/p1'
-MongoClient.connect(url, (err, db) => {
-    console.log("Connected successfully to MongoDB server")
-    db.close
-}) */
+
+/* const url = process.env.MONGODB_URI || 'mongodb://localhost:27017/p1' */
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://yguezide:Qv4DGMKpBhIqJplW@testdb.kpbihfl.mongodb.net/?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: "ServerApiVersion.v1" });
+
+client.connect(err => {
+    console.error(err);
+    client.close();
+});
